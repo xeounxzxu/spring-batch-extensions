@@ -1,3 +1,4 @@
+import com.diffplug.gradle.spotless.SpotlessExtension
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.jvm.toolchain.JavaLanguageVersion
@@ -5,6 +6,7 @@ import org.gradle.jvm.toolchain.JavaLanguageVersion
 plugins {
     id 'org.springframework.boot' version '3.5.6' apply false
     id 'io.spring.dependency-management' version '1.1.7' apply false
+    id 'com.diffplug.spotless' version '6.25.0'
 }
 
 subprojects {
@@ -19,6 +21,14 @@ subprojects {
         extensions.configure(JavaPluginExtension) { javaExtension ->
             javaExtension.toolchain { spec ->
                 spec.languageVersion = JavaLanguageVersion.of(17)
+            }
+        }
+
+        pluginManager.apply('com.diffplug.spotless')
+        extensions.configure(SpotlessExtension) { spotlessExtension ->
+            spotlessExtension.java { javaExtension ->
+                javaExtension.target('src/*/java/**/*.java')
+                javaExtension.googleJavaFormat('1.18.1')
             }
         }
     }
