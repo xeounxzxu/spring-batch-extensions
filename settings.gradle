@@ -1,1 +1,5 @@
 rootProject.name = 'spring-batch-extensions'
+
+include 'sample:spring-batch'
+include 'libraries:listener'
+include 'libraries:querydsl-reader'
